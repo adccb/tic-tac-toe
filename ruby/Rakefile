@@ -1,0 +1,13 @@
+task default: %w[start]
+
+desc "test"
+task :test do
+  Rake::FileList["spec/*.spec.rb"].each do |f|
+    ruby f
+  end
+end
+
+desc "start"
+task :start do
+  ruby "./index.rb"
+end
