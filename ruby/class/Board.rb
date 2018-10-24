@@ -9,6 +9,10 @@ class Board
     @board[y][x] = v
   end
 
+  def can_move x, y
+    @board[y][x].nil?
+  end
+
   def get_row y
     raise IndexError if y > @board.length or y < 0
     @board[y]
