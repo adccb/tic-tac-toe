@@ -1,3 +1,4 @@
+require "colorize"
 require_relative "./class/Board.rb"
 require_relative "./class/Game.rb"
 require_relative "./class/Renderer.rb"
@@ -35,17 +36,17 @@ def main
 
   won = false
   moves = 0
+  x = -1
+  y = -1
+  begin
   while not won
     @renderer.render
     puts "\n\n"
     puts "#{@game.current_player}'s move"
     puts "\n"
-    puts "where would you like to move? (number then letter, e.g. a1)"
+    puts "where would you like to move? (letter then number, e.g. #{"a1".yellow})"
 
-    # get their move
-    x, y = get_move.values_at(:x, :y)
-
-    # is that move valid?
+    # wait for a valid move?
     while not @board.can_move x, y
       puts "you can't move there -- someone already did! try again."
       x, y = get_move.values_at :x, :y
@@ -58,15 +59,19 @@ def main
       won = true
       @renderer.render
       puts "\n\n"
-      puts "congratulations #{@game.change_player}!"
+      puts "congratulations #{@game.change_player.red}!"
     end
     
     if moves == 9
       won = true
       @renderer.render
       puts "\n\n"
-      puts "looks like nobody won this one."
+      puts "looks like nobody won this one. #{":(".blue}"
     end
+  end
+
+  rescue Interrupt
+    # no-op
   end
 end
 

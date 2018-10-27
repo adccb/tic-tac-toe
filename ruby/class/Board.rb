@@ -10,6 +10,8 @@ class Board
   end
 
   def can_move x, y
+    x.between?(0, 3) and
+    y.between?(0,3) and
     @board[y][x].nil?
   end
 

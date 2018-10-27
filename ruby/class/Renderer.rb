@@ -1,3 +1,5 @@
+require "colorize"
+
 class Renderer
   def initialize kwargs
     @game = kwargs[:game]
@@ -9,11 +11,15 @@ class Renderer
   end
 
   def render
-    top = "   A   B   C \n"
+    system "clear" or system "cls"
+    
+    top = "   A   B   C \n".green
+
     board = @board.board.map.with_index { |row, idx|
-      r = row.map { |itm| lift(itm) }
-      (idx + 1).to_s + "  " + r.join(" | ") + " "
+      r = row.map { |itm| self.lift(itm) }
+      (idx + 1).to_s.green + "  " + r.join(" | ") + " "
     }.join "\n  ---+---+---\n"
+
     puts "\n" + top + board
   end
 end
