@@ -6,20 +6,20 @@ class Renderer
     @board = kwargs[:board]
   end
 
-  def lift itm
-    itm ? itm : " "
-  end
-
   def render
     system "clear" or system "cls"
-    
+
+    lift = Proc.new { |itm| itm ? itm : " " }
+    format_row = Proc.new do |row, idx|
+      r = row.map &lift
+      "#{(idx + 1).to_s.green}  #{r.join(" | ")} "
+    end
+
     top = "   A   B   C \n".green
+    board = @board.board
+      .map.with_index(&format_row)
+      .join "\n  ---+---+---\n"
 
-    board = @board.board.map.with_index { |row, idx|
-      r = row.map { |itm| self.lift(itm) }
-      (idx + 1).to_s.green + "  " + r.join(" | ") + " "
-    }.join "\n  ---+---+---\n"
-
-    puts "\n" + top + board
+    puts "\n#{top + board}"
   end
 end

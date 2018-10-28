@@ -46,6 +46,7 @@ def main
     puts "\n"
     puts "where would you like to move? (letter then number, e.g. #{"a1".yellow})"
 
+    x, y = get_move.values_at :x, :y
     # wait for a valid move?
     while not @board.can_move x, y
       puts "you can't move there -- someone already did! try again."
